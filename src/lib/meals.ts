@@ -4,6 +4,9 @@ import { Meal } from "~/initdb";
 const db = sql("meals.db");
 
 export async function getMeals() {
-  await new Promise((resolve) => setTimeout(resolve, 2000));
+  //to test loading state
+  // await new Promise((resolve) => setTimeout(resolve, 5000));
+  //to test error state
+  // throw new Error("Loading failed");
   return db.prepare("SELECT * FROM meals").all() as unknown as Promise<Meal[]>;
 }
