@@ -1,5 +1,6 @@
 import styles from "./meals-grid.module.css";
-import MealItem, { Meal } from "@/components/meals/meals-item";
+import MealItem from "@/components/meals/meals-item";
+import { Meal } from "~/initdb";
 
 type Props = {
   meals: Array<Meal>;

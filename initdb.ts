@@ -164,6 +164,8 @@ const dummyMeals = [
   },
 ];
 
+export type Meal = (typeof dummyMeals)[number];
+
 db.prepare(
   `
    CREATE TABLE IF NOT EXISTS meals (
