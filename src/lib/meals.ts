@@ -10,3 +10,10 @@ export async function getMeals() {
   // throw new Error("Loading failed");
   return db.prepare("SELECT * FROM meals").all() as unknown as Promise<Meal[]>;
 }
+
+export function getMeal(slug: Meal["slug"]) {
+  // ? and .get() to protect from SQL injection attack
+  return db
+    .prepare("SELECT * FROM meals WHERE slug = ?")
+    .get(slug) as unknown as Meal;
+}
