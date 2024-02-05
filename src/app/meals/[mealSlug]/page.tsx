@@ -1,12 +1,15 @@
 import styles from "./page.module.css";
 import Image from "next/image";
 import { getMeal } from "@/lib/meals";
+import { notFound } from "next/navigation";
 
 type Props = Readonly<{ params: { mealSlug: string } }>;
 
 export default function MealDetailsPage({ params }: Props) {
   const meal = getMeal(params.mealSlug);
-
+  if (!meal) {
+    notFound();
+  }
   meal.instructions = meal.instructions.replace(/\n/g, "<br />");
   return (
     <>
