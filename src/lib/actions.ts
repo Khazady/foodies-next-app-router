@@ -24,7 +24,11 @@ function isInvalidFormValue(
   return true;
 }
 
-export async function shareMeal(formData: FormData) {
+export async function shareMeal(
+  // can be used for editing and prepopulating existing data?
+  prevState: { message: string | null },
+  formData: FormData,
+) {
   const meal = {
     title: formData.get("title"),
     image: formData.get("image"),
@@ -42,7 +46,9 @@ export async function shareMeal(formData: FormData) {
     isInvalidFormValue(meal.creator) ||
     isInvalidFormValue(meal.creator_email, { emailCheck: true })
   ) {
-    throw new Error("Invalid input");
+    return {
+      message: "Invalid input",
+    };
   }
   await saveMeal(meal as MealFormData);
   redirect("/meals");
