@@ -8,20 +8,20 @@ function isInvalidFormValue(
   options?: { emailCheck?: boolean },
 ) {
   if (!formValue) {
-    return false;
+    return true;
   }
   if (formValue instanceof String) {
     if (formValue.trim() === "") {
-      return false;
+      return true;
     }
     if (options?.emailCheck && !formValue.includes("@")) {
-      return false;
+      return true;
     }
   }
-  if (formValue instanceof File && formValue.size === 0) {
-    return false;
+  if (formValue instanceof Blob && formValue.size === 0) {
+    return true;
   }
-  return true;
+  return false;
 }
 
 export async function shareMeal(
