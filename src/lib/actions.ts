@@ -2,6 +2,7 @@
 
 import { MealFormData, saveMeal } from "@/lib/meals";
 import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
 
 function isInvalidFormValue(
   formValue: ReturnType<FormData["get"]>,
@@ -51,5 +52,6 @@ export async function shareMeal(
     };
   }
   await saveMeal(meal as MealFormData);
+  revalidatePath("/meals");
   redirect("/meals");
 }
