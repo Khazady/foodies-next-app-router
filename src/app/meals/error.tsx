@@ -1,9 +1,11 @@
 "use client";
 
-export default function MealsErrorPage(props: {
-  error: Error & { digest?: string };
-  reset: () => void;
-}) {
+export default function MealsErrorPage(
+  props: Readonly<{
+    error: Error & { digest?: string };
+    reset: () => void;
+  }>,
+) {
   console.log(props.error.message);
   return (
     <main className="error">

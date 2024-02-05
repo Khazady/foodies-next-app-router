@@ -6,7 +6,7 @@ type Props = {
   meals: Array<Meal>;
 };
 
-export default function MealsGrid({ meals }: Props) {
+export default function MealsGrid({ meals }: Readonly<Props>) {
   return (
     <ul className={styles.meals}>
       {meals.map((meal) => (

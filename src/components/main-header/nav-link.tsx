@@ -10,7 +10,7 @@ type Props = {
   children: ReactNode;
 };
 
-export default function NavLink(props: Props) {
+export default function NavLink(props: Readonly<Props>) {
   const { href, children } = props;
   const path = usePathname();
   return (

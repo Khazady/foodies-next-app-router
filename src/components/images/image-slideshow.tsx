@@ -39,7 +39,7 @@ export default function ImageSlideshow() {
     <div className={classes.slideshow}>
       {images.map((image, index) => (
         <Image
-          key={index}
+          key={image.alt}
           src={image.image}
           className={index === currentImageIndex ? classes.active : ""}
           alt={image.alt}

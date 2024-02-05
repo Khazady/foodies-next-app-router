@@ -10,7 +10,7 @@ export default function MealItem({
   image,
   summary,
   creator,
-}: Meal) {
+}: Readonly<Meal>) {
   return (
     <article className={classes.meal}>
       <header>
