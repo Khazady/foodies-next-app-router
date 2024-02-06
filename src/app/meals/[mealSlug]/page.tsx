@@ -2,7 +2,6 @@ import styles from "./page.module.css";
 import Image from "next/image";
 import { getMeal } from "@/lib/meals";
 import { notFound } from "next/navigation";
-import { S3URL } from "@/lib/constants";
 
 type Props = Readonly<{ params: { mealSlug: string } }>;
 
@@ -16,7 +15,11 @@ export default function MealDetailsPage({ params }: Props) {
     <>
       <header className={styles.header}>
         <div className={styles.image}>
-          <Image src={`${S3URL}/${meal.image}`} alt={meal.title} fill />
+          <Image
+            src={`${process.env.AWS_S3_BUCKET_URL}/${meal.image}`}
+            alt={meal.title}
+            fill
+          />
         </div>
         <div className={styles.headerText}>
           <h1>{meal.title}</h1>

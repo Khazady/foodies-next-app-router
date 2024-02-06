@@ -1,11 +1,16 @@
-import fs from "node:fs";
-
 import sql from "better-sqlite3";
 import slugify from "slugify";
 import xss from "xss";
 import { Meal } from "~/initdb";
-import { randomUUID } from "node:crypto";
+import { S3 } from "@aws-sdk/client-s3";
 
+const s3 = new S3({
+  region: "eu-north-1",
+  credentials: {
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID ?? "",
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY ?? "",
+  },
+});
 const db = sql("meals.db");
 
 export async function getMeals() {
@@ -30,18 +35,17 @@ export async function saveMeal(meal: MealFormData) {
   const instructions = xss(meal.instructions);
 
   const extension = meal.image.name.split(".").pop();
-  const fileName = `${slug}_${randomUUID()}.${extension}`;
+  const fileName = `${slug}.${extension}`;
 
-  // save file to public/images folder
-  const stream = fs.createWriteStream(`public/images/${fileName}`);
   const bufferedImage = await meal.image.arrayBuffer();
-  stream.write(Buffer.from(bufferedImage), (error) => {
-    if (error) {
-      throw new Error("Saving image failed!");
-    }
+
+  s3.putObject({
+    Bucket: "khazady-udemy-nextjs-course-bucket",
+    Key: fileName,
+    Body: Buffer.from(bufferedImage),
+    ContentType: meal.image.type,
   });
   // replace File with path to it, (public folder is already root, so we don't indicate it here
-  const imagePath = `/images/${fileName}`;
   db.prepare(
     `
   INSERT INTO meals
@@ -56,5 +60,5 @@ export async function saveMeal(meal: MealFormData) {
          @slug
     )
   `,
-  ).run({ ...meal, image: imagePath, slug, instructions });
+  ).run({ ...meal, image: fileName, slug, instructions });
 }

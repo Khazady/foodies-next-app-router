@@ -3,7 +3,6 @@ import Image from "next/image";
 
 import classes from "./meal-item.module.css";
 import { Meal } from "~/initdb";
-import { S3URL } from "@/lib/constants";
 
 export default function MealItem({
   title,
@@ -16,7 +15,11 @@ export default function MealItem({
     <article className={classes.meal}>
       <header>
         <div className={classes.image}>
-          <Image src={`${S3URL}/${image}`} alt={title} fill />
+          <Image
+            src={`${process.env.AWS_S3_BUCKET_URL}/${image}`}
+            alt={title}
+            fill
+          />
         </div>
         <div className={classes.headerText}>
           <h2>{title}</h2>
