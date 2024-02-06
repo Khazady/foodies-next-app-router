@@ -17,7 +17,8 @@ export async function getMeals() {
 }
 
 export function getMeal(slug: Meal["slug"]) {
-  // ? and .get() to protect from SQL injection attack, in better-sqlite3 syntax it can be replaced like this @slug
+  // don't use template sting to protect from SQL injection attack
+  // use ? and .get() instead, or in better-sqlite3 syntax it can be replaced like this - @slug
   return db.prepare("SELECT * FROM meals WHERE slug = ?").get(slug) as Meal;
 }
 
