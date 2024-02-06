@@ -41,7 +41,7 @@ export default function NewMealForm() {
         ></textarea>
       </p>
       <ImagePicker label="Your image" name="image" />
-      {/*it should be a toast or some styled form error*/}
+      {/*useFormState may rerender this, and also it can be a toast or some styled form error*/}
       {state.message && <p>{state.message}</p>}
       <p className={styles.actions}>
         <MealsFormSubmit />
